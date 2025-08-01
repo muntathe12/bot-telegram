@@ -96,7 +96,7 @@ class HealthChecker:
         
         # فحص استيراد الوحدات
         try:
-            from main import TelegramVideoBot
+            from main import main, start_command, help_command
             self.check("استيراد main.py", True)
         except Exception as e:
             self.check("استيراد main.py", False, str(e))

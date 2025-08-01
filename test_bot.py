@@ -80,6 +80,21 @@ def test_utils():
         valid = is_valid_url(url)
         print(f"🔍 {url} -> {'✅ صحيح' if valid else '❌ غير صحيح'}")
 
+async def test_main_import():
+    """
+    اختبار استيراد الملف الرئيسي
+    """
+    print("\n🔍 اختبار استيراد main.py...")
+    
+    try:
+        from main import main, start_command, help_command
+        print("✅ تم استيراد main.py بنجاح")
+        print("✅ جميع الدوال الأساسية متوفرة")
+        return True
+    except Exception as e:
+        print(f"❌ خطأ في استيراد main.py: {str(e)}")
+        return False
+
 async def main():
     """
     تشغيل جميع الاختبارات
@@ -88,6 +103,9 @@ async def main():
     
     # اختبار الأدوات المساعدة
     test_utils()
+    
+    # اختبار استيراد الملف الرئيسي
+    await test_main_import()
     
     # اختبار معلومات الفيديو
     await test_video_info()

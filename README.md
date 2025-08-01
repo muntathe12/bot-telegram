@@ -105,13 +105,40 @@ https://facebook.com/watch?v=123456789
 
 ```
 telegram-video-bot/
-├── main.py              # الملف الرئيسي للبوت
+├── main.py              # الملف الرئيسي للبوت (نمط v20+)
 ├── download.py          # وحدة تحميل الفيديوهات
 ├── utils.py             # أدوات مساعدة
 ├── requirements.txt     # المكتبات المطلوبة
 ├── Procfile            # إعدادات Render
 ├── .env.example        # مثال على متغيرات البيئة
+├── test_bot.py         # اختبارات البوت
+├── health_check.py     # فحص صحة البوت
+├── setup.py            # إعداد سريع
+├── simple_example.py   # مثال بسيط على النمط الجديد
+├── run.bat / run.sh    # ملفات تشغيل سريع
 └── README.md           # هذا الملف
+```
+
+## 🔄 النمط الجديد (python-telegram-bot v20+)
+
+البوت يستخدم النمط الصحيح لإصدار 20+ من المكتبة:
+
+```python
+from telegram.ext import ApplicationBuilder
+
+async def main():
+    application = ApplicationBuilder().token("YOUR_BOT_TOKEN").build()
+    
+    # إضافة المعالجات
+    application.add_handler(CommandHandler("start", start_command))
+    application.add_handler(MessageHandler(filters.TEXT, handle_message))
+    
+    # تشغيل البوت
+    await application.run_polling()
+
+if __name__ == '__main__':
+    import asyncio
+    asyncio.run(main())
 ```
 
 ## ⚙️ الإعدادات المتقدمة
@@ -169,6 +196,12 @@ supported_domains = [
 ```bash
 # تشغيل البوت في وضع التطوير
 python main.py
+
+# اختبار شامل للبوت
+python test_bot.py
+
+# فحص صحة البوت
+python health_check.py
 
 # اختبار وحدة التحميل
 python -c "import asyncio; from download import downloader; asyncio.run(downloader.get_video_info('https://youtube.com/watch?v=dQw4w9WgXcQ'))"
