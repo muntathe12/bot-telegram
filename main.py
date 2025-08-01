@@ -288,24 +288,10 @@ async def main():
     # إضافة معالج الأخطاء
     application.add_error_handler(error_handler)
     
-    # تشغيل البوت - النمط المحدث
+    # تشغيل البوت
     logger.info("🚀 بدء تشغيل البوت...")
-    try:
-        await application.initialize()
-        await application.start()
-        await application.updater.start_polling(drop_pending_updates=True)
-        await application.updater.idle()
-    except KeyboardInterrupt:
-        logger.info("🛑 تم إيقاف البوت بواسطة المستخدم")
-    except Exception as e:
-        logger.error(f"❌ خطأ في تشغيل البوت: {str(e)}")
-    finally:
-        # تنظيف الموارد
-        if application.updater.running:
-            await application.updater.stop()
-        if application.running:
-            await application.stop()
-        await application.shutdown()
+    await application.run_polling()
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    import asyncio
     asyncio.run(main())

@@ -26,22 +26,10 @@ async def main():
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("hello", hello))
     
-    # تشغيل البوت - النمط المحدث
+    # تشغيل البوت
     print("🚀 تشغيل البوت...")
-    try:
-        await application.initialize()
-        await application.start()
-        await application.updater.start_polling()
-        await application.updater.idle()
-    except KeyboardInterrupt:
-        print("🛑 تم إيقاف البوت")
-    finally:
-        # تنظيف الموارد
-        if application.updater.running:
-            await application.updater.stop()
-        if application.running:
-            await application.stop()
-        await application.shutdown()
+    await application.run_polling()
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    import asyncio
     asyncio.run(main())
