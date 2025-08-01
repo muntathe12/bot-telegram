@@ -133,8 +133,19 @@ async def main():
     application.add_handler(CommandHandler("start", start_command))
     application.add_handler(MessageHandler(filters.TEXT, handle_message))
     
-    # تشغيل البوت
-    await application.run_polling()
+    # تشغيل البوت - النمط المحدث
+    try:
+        await application.initialize()
+        await application.start()
+        await application.updater.start_polling()
+        await application.updater.idle()
+    finally:
+        # تنظيف الموارد
+        if application.updater.running:
+            await application.updater.stop()
+        if application.running:
+            await application.stop()
+        await application.shutdown()
 
 if __name__ == '__main__':
     import asyncio
